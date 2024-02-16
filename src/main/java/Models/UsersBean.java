@@ -7,49 +7,34 @@ public class UsersBean implements Serializable {
     public String getId() {
         return id;
     }
-
     public void setId(String id) {
         this.id = id;
     }
-
-    private String id;
-
-    private USER_TYPE UserType;
-    public enum USER_TYPE{
-        student,
-        teacher
+    public String getPrivilegeType() {
+        return privilegeType;
     }
-
-    public PRIVILAGE_TYPE getPrivType() {
-        return privType;
+    public void setPrivilegeType(String privilegeType) {
+        this.privilegeType = privilegeType;
     }
-
-    public void setPrivType(PRIVILAGE_TYPE privType) {
-        this.privType = privType;
+    public String getUserType() {
+        return userType;
     }
-
-    private PRIVILAGE_TYPE privType = PRIVILAGE_TYPE.user;
-    public enum PRIVILAGE_TYPE{
-        user,
-        admin,
-        superAdmin
+    public void setUserType(String userType) {
+        this.userType = userType;
     }
-    boolean confirmed = false;
+    public boolean isConfirmed() {
+        return confirmed;
+    }
     public boolean getConfirmed() {
         return confirmed;
     }
-
     public void setConfirmed(boolean confirmed) {
         this.confirmed = confirmed;
     }
-
-    public USER_TYPE getUserType() {
-        return UserType;
-    }
-
-    public void setUserType(USER_TYPE userType) {
-        this.UserType = userType;
-    }
+    private String id;
+    private String privilegeType;
+    private String userType;
+    boolean confirmed = false;
     public UsersBean(){
     }
 }
