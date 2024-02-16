@@ -1,11 +1,9 @@
 package Models;
 
 import java.io.Serializable;
-import java.sql.ResultSet;
 
 public class UsersBean implements Serializable {
 
-    private boolean admin;
     public String getId() {
         return id;
     }
@@ -16,7 +14,7 @@ public class UsersBean implements Serializable {
 
     private String id;
 
-    private USER_TYPE type;
+    private USER_TYPE UserType;
     public enum USER_TYPE{
         student,
         teacher
@@ -31,7 +29,7 @@ public class UsersBean implements Serializable {
     }
 
     private PRIVILAGE_TYPE privType = PRIVILAGE_TYPE.user;
-    private enum PRIVILAGE_TYPE{
+    public enum PRIVILAGE_TYPE{
         user,
         admin,
         superAdmin
@@ -45,16 +43,12 @@ public class UsersBean implements Serializable {
         this.confirmed = confirmed;
     }
 
-    public USER_TYPE getType() {
-        return type;
+    public USER_TYPE getUserType() {
+        return UserType;
     }
 
-    public void setType(USER_TYPE type) {
-        this.type = type;
-    }
-
-    public void setAdmin(boolean admin) {
-        this.admin = admin;
+    public void setUserType(USER_TYPE userType) {
+        this.UserType = userType;
     }
     public UsersBean(){
     }

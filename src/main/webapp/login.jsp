@@ -9,11 +9,12 @@
 </head>
 <body>
     <div class="container">
-        <div class="nav-cont">
-            <nav>
-                <a href="http://localhost:23310/login">Login</a>
-            </nav>
-        </div>
+        <c:if test="${applicationScope.userBean.privType == 'user'}">
+        <%@ include file="Fragments/nav.jsp" %>
+        </c:if>
+        <c:if test="${applicationScope.userBean.privType == 'admin'}">
+                <%@ include file="Fragments/nav.jsp" %>
+                </c:if>
         <div class="text">
             <h1>Login</h1>
         </div>
