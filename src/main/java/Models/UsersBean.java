@@ -21,6 +21,15 @@ public class UsersBean implements Serializable {
         student,
         teacher
     }
+
+    public PRIVILAGE_TYPE getPrivType() {
+        return privType;
+    }
+
+    public void setPrivType(PRIVILAGE_TYPE privType) {
+        this.privType = privType;
+    }
+
     private PRIVILAGE_TYPE privType = PRIVILAGE_TYPE.user;
     private enum PRIVILAGE_TYPE{
         user,
@@ -28,7 +37,7 @@ public class UsersBean implements Serializable {
         superAdmin
     }
     boolean confirmed = false;
-    public boolean isConfirmed() {
+    public boolean getConfirmed() {
         return confirmed;
     }
 
@@ -42,10 +51,6 @@ public class UsersBean implements Serializable {
 
     public void setType(USER_TYPE type) {
         this.type = type;
-    }
-
-    public boolean isAdmin() {
-        return admin;
     }
 
     public void setAdmin(boolean admin) {

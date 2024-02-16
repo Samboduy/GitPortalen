@@ -21,6 +21,9 @@ public class LogInServlet extends HttpServlet {
     @Override
     public void init(ServletConfig config) throws ServletException {
         UsersBean user = new UsersBean();
+        config.getServletContext().setAttribute("user",user);
+        config.getServletContext().setInitParameter("user","skf");
+        super.init(config);
     }
 
     @Override
@@ -48,10 +51,9 @@ public class LogInServlet extends HttpServlet {
             //If email and password is correct then userbean gets Users id and the state is confirmed
             if (rs.getString("username").equals(username)
                     && rs.getString("password").equals(password)){
-                UsersBean usersBean = new UsersBean();
-                usersBean.setId(rs.getString("id"));
-                usersBean.setConfirmed(true);
 
+                ((UsersBean) getServletConfig().getServletContext().getAttribute("user")).getConfirmed();
+                
             }else{
                 req.getRequestDispatcher("login.jsp").forward(req,resp);
             }
