@@ -19,10 +19,8 @@ public class LogInServlet extends HttpServlet {
 
     @Override
     public void init(ServletConfig config) throws ServletException {
-        UsersBean userBean = new UsersBean();
-        userBean.setPrivilegeType(String.valueOf(PrivilegeType.PRIVILAGE_TYPE.user));
-        config.getServletContext().setAttribute("userBean", userBean);
         super.init(config);
+        cleanBean();
     }
 
     @Override
@@ -40,15 +38,18 @@ public class LogInServlet extends HttpServlet {
         System.out.println(table);
         //Querie for information on student/teacher
         //if the user is a student then send username to student module, student module returns a resultset with
-        if (table.equals("Student")) {
-            ResultSet rs = StudentsModule.checkStudent(username);
-            checkLogin(rs, username, password, resp, req,table);
-        } else {
-            ResultSet rs = TeacherModule.checkTeacher(username);
-            checkLogin(rs, username, password, resp, req,table);
+        if (req.getParameter("login")!=null) {
+            if (table.equals("Student")) {
+                ResultSet rs = StudentsModule.checkStudent(username);
+                checkLogin(rs, username, password, resp, req, table);
+            } else {
+                ResultSet rs = TeacherModule.checkTeacher(username);
+                checkLogin(rs, username, password, resp, req, table);
+            }
+        } else if (req.getParameter("logout")!=null) {
+            cleanBean();
+            req.getRequestDispatcher("login.jsp").forward(req,resp);
         }
-        //saving what user wrote into the f
-
     }
 
     public void checkLogin(ResultSet rs, String username, String password, HttpServletResponse resp, HttpServletRequest req,String table)throws ServletException, IOException {
@@ -71,7 +72,7 @@ public class LogInServlet extends HttpServlet {
                     }
                 }
                 getServletContext().setAttribute("userBean", userBean);
-                System.out.println("DONE! NEED TO REDIRECT TO A NEW JSP");
+                req.getRequestDispatcher("login.jsp").forward(req, resp);
             } else {
                 System.out.println("else");
                 req.getRequestDispatcher("login.jsp").forward(req, resp);
@@ -79,5 +80,10 @@ public class LogInServlet extends HttpServlet {
         } catch (SQLException ex) {
             Database.PrintSQLException(ex);
         }
+    }
+    public void cleanBean(){
+        UsersBean userBean = new UsersBean();
+        userBean.setPrivilegeType(String.valueOf(PrivilegeType.PRIVILAGE_TYPE.user));
+        getServletConfig().getServletContext().setAttribute("userBean",userBean);
     }
 }

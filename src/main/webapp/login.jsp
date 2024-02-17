@@ -9,18 +9,26 @@
 </head>
 <body>
     <div class="container">
-        <c:if test="${applicationScope.usersBean.privilegeType == 'user'}">
+        <c:if test="${applicationScope.userBean.privilegeType == ('user')}">
         <%@ include file="Fragments/nav.jsp" %>
         </c:if>
-        <c:if test="${applicationScope.usersBean.privilegeType == 'admin'}">
-                <%@ include file="Fragments/nav.jsp" %>
-                </c:if>
-        <div class="text">
-            <h1>Login</h1>
-        </div>
 
+        <c:if test="${applicationScope.userBean.privilegeType == 'admin'}">
+            <%@ include file="Fragments/nav.jsp" %>
+        </c:if>
+        <c:if test="${!applicationScope.userBean.confirmed}">
+            <div class="text">
+                <h1>Login</h1>
+            </div>
+        </c:if>
+        <c:if test="${applicationScope.userBean.confirmed}">
+            <div class="text">
+                <h1>Logged In!</h1>
+            </div>
+        </c:if>
+        <c:if test="${!applicationScope.userBean.confirmed}">
         <div class="form-cont">
-            <form action="/login" method="POST">
+            <form action="${pageContext.request.contextPath}/login" method="POST">
                 <%--@declare id="teachstud"--%><label for="teachStud">Teacher or Student:</label><br>
                   <select name="teach_stud" id="teach_stud"><br>
                     <option value="Teacher">teacher</option>
@@ -30,9 +38,13 @@
                 <input type="text" id="username" name="username" required><br>
                 <label for="password">Password:</label><br>
                 <input type="text" id="password" name="password" required><br>
-                <input type="submit" value="Add">
+                <input type="submit" name="login" value="login">
             </form>
         </div>
+        </c:if>
+        <c:if test="${applicationScope.userBean.confirmed}">
+            <%@ include file="Fragments/logoutFrom.jsp" %>
+        </c:if>
     </div>
 </body>
 </html>

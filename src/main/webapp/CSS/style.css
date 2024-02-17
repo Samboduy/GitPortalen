@@ -25,6 +25,10 @@ html{
     flex-wrap: wrap;
     align-items: center;
 }
+#logoutBT{
+    width: 200px;
+    height: 100px;
+}
 .form-cont{
     display: flex;
     width: 100%;
