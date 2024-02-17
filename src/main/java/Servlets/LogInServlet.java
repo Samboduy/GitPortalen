@@ -1,7 +1,6 @@
 package Servlets;
 
-import Models.Database;
-import Models.UsersBean;
+import Models.*;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -15,51 +14,70 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-@WebServlet(name = "login",urlPatterns = "/login")
+@WebServlet(name = "login", urlPatterns = "/login")
 public class LogInServlet extends HttpServlet {
 
     @Override
     public void init(ServletConfig config) throws ServletException {
-        UsersBean user = new UsersBean();
-        config.getServletContext().setAttribute("user",user);
-        config.getServletContext().setInitParameter("user","skf");
+        UsersBean userBean = new UsersBean();
+        userBean.setPrivilegeType(String.valueOf(PrivilegeType.PRIVILAGE_TYPE.user));
+        config.getServletContext().setAttribute("userBean", userBean);
         super.init(config);
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getRequestDispatcher("login.jsp").forward(req,resp);
+        req.getRequestDispatcher("login.jsp").forward(req, resp);
 
     }
+
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         //saves what table to use in sql question
-        String table = req.getParameter("stud_teach");
-        System.out.println(table);
-        //Querie for information on student/teacher
-        String sql = "SELECT id,username,password FROM " + table + " WHERE email = ?";
-        //saving what user wrote into the form
+        String table = req.getParameter("teach_stud");
         String username = req.getParameter("username");
         String password = req.getParameter("password");
-        try {
-            //Searching for the user with the right email
-            PreparedStatement ps = Database.connect().prepareStatement(sql);
-            ps.setString(1,username);
-            ResultSet rs = ps.executeQuery();
-            rs.next();
-            //checking if email and password is correct, need to redirect in future to another site
-            //If email and password is correct then userbean gets Users id and the state is confirmed
-            if (rs.getString("username").equals(username)
-                    && rs.getString("password").equals(password)){
-
-                ((UsersBean) getServletConfig().getServletContext().getAttribute("user")).getConfirmed();
-                
-            }else{
-                req.getRequestDispatcher("login.jsp").forward(req,resp);
-            }
-        } catch (SQLException e) {
-            Database.PrintSQLException(e);
+        System.out.println(table);
+        //Querie for information on student/teacher
+        //if the user is a student then send username to student module, student module returns a resultset with
+        if (table.equals("Student")) {
+            ResultSet rs = StudentsModule.checkStudent(username);
+            checkLogin(rs, username, password, resp, req,table);
+        } else {
+            ResultSet rs = TeacherModule.checkTeacher(username);
+            checkLogin(rs, username, password, resp, req,table);
         }
+        //saving what user wrote into the f
 
+    }
+
+    public void checkLogin(ResultSet rs, String username, String password, HttpServletResponse resp, HttpServletRequest req,String table)throws ServletException, IOException {
+        try {
+            rs.next();
+            if (rs.getString("username").equals(username) &&
+                    rs.getString("password").equals(password)) {
+                UsersBean userBean = ((UsersBean) getServletConfig().getServletContext().getAttribute("userBean"));
+                userBean.setConfirmed(true);
+                userBean.setId(rs.getString("id"));
+                if (table.equals("Student")){
+                    userBean.setUserType(String.valueOf(UserType.USER_TYPE.student));
+                    userBean.setPrivilegeType(String.valueOf(PrivilegeType.PRIVILAGE_TYPE.user));
+                }else{
+                    userBean.setUserType(String.valueOf(UserType.USER_TYPE.teacher));
+                    if (rs.getString("privilage_type").equals("admin")){
+                        userBean.setPrivilegeType(String.valueOf(PrivilegeType.PRIVILAGE_TYPE.admin));
+                    }else {
+                        userBean.setPrivilegeType(String.valueOf(PrivilegeType.PRIVILAGE_TYPE.user));
+                    }
+                }
+                getServletContext().setAttribute("userBean", userBean);
+                System.out.println("DONE! NEED TO REDIRECT TO A NEW JSP");
+            } else {
+                System.out.println("else");
+                req.getRequestDispatcher("login.jsp").forward(req, resp);
+            }
+        } catch (SQLException ex) {
+            Database.PrintSQLException(ex);
+        }
     }
 }

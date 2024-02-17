@@ -12,7 +12,7 @@ public class Database {
             Class.forName("com.mysql.cj.jdbc.Driver");
             //PORT and DbName should be changed
 
-            con = DriverManager.getConnection("jdbc:mysql://localhost:13306/gritacademy","userRead","");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:13306/gritacademyportal","user","");
             return con;
         }catch (Exception e){
             System.out.println(e);

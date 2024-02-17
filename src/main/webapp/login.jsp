@@ -9,18 +9,19 @@
 </head>
 <body>
     <div class="container">
-        <div class="nav-cont">
-            <nav>
-                <a href="http://localhost:23310/login">Login</a>
-            </nav>
-        </div>
+        <c:if test="${applicationScope.usersBean.privilegeType == 'user'}">
+        <%@ include file="Fragments/nav.jsp" %>
+        </c:if>
+        <c:if test="${applicationScope.usersBean.privilegeType == 'admin'}">
+                <%@ include file="Fragments/nav.jsp" %>
+                </c:if>
         <div class="text">
             <h1>Login</h1>
         </div>
 
         <div class="form-cont">
             <form action="/login" method="POST">
-                <label for="teacher">Choose teacher or student:</label><br>
+                <%--@declare id="teachstud"--%><label for="teachStud">Teacher or Student:</label><br>
                   <select name="teach_stud" id="teach_stud"><br>
                     <option value="Teacher">teacher</option>
                     <option value="Student">student</option>
