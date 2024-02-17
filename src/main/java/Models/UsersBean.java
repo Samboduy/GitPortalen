@@ -5,7 +5,6 @@ import java.sql.ResultSet;
 
 public class UsersBean implements Serializable {
 
-    private boolean admin;
     public String getId() {
         return id;
     }
@@ -53,9 +52,6 @@ public class UsersBean implements Serializable {
         this.type = type;
     }
 
-    public void setAdmin(boolean admin) {
-        this.admin = admin;
-    }
     public UsersBean(){
     }
 }
