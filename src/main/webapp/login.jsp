@@ -14,7 +14,7 @@
         </c:if>
 
         <c:if test="${applicationScope.userBean.privilegeType == 'admin'}">
-            <%@ include file="Fragments/nav.jsp" %>
+            <%@ include file="Fragments/adminNav.jsp" %>
         </c:if>
         <c:if test="${!applicationScope.userBean.confirmed}">
             <div class="text">
@@ -43,7 +43,11 @@
         </div>
         </c:if>
         <c:if test="${applicationScope.userBean.confirmed}">
-            <%@ include file="Fragments/logoutFrom.jsp" %>
+            <div class="form-cont">
+                <form action="${pageContext.request.contextPath}/login" method="POST">
+                    <button id="logoutBT" value="logout" name="logout" ></button>
+                </form>
+            </div>
         </c:if>
     </div>
 </body>
