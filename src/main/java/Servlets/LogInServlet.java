@@ -72,7 +72,8 @@ public class LogInServlet extends HttpServlet {
                     }
                 }
                 getServletContext().setAttribute("userBean", userBean);
-                req.getRequestDispatcher("login.jsp").forward(req, resp);
+                req.getRequestDispatcher("http://localhost:23310/userpage").forward(req, resp);
+                System.out.println("login");
             } else {
                 System.out.println("else");
                 req.getRequestDispatcher("login.jsp").forward(req, resp);

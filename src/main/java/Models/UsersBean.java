@@ -1,6 +1,7 @@
 package Models;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 public class UsersBean implements Serializable {
 
@@ -31,7 +32,6 @@ public class UsersBean implements Serializable {
     public void setConfirmed(boolean confirmed) {
         this.confirmed = confirmed;
     }
-
 
 
     private String id;
