@@ -1,6 +1,8 @@
 package Servlets;
 
 import Models.*;
+import Models.Helpers.UserCoursePackage;
+import Models.Helpers.UserStudentsPackage;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -55,8 +57,9 @@ public class LogInServlet extends HttpServlet {
     public void checkLogin(ResultSet rs, String username, String password, HttpServletResponse resp, HttpServletRequest req,String table)throws ServletException, IOException {
         try {
             rs.next();
-            if (rs.getString("username").equals(username) &&
-                    rs.getString("password").equals(password)) {
+            String foundUsername = rs.getString("username");
+            String foundPassword = rs.getString("password");
+            if (foundUsername.equals(username) && foundPassword.equals(password)) {
                 UsersBean userBean = ((UsersBean) getServletConfig().getServletContext().getAttribute("userBean"));
                 userBean.setConfirmed(true);
                 userBean.setId(rs.getString("id"));
@@ -72,10 +75,9 @@ public class LogInServlet extends HttpServlet {
                     }
                 }
                 getServletContext().setAttribute("userBean", userBean);
+                UserCoursePackage.userBeanIDsInfo(userBean);
                 req.getRequestDispatcher("userpage.jsp").forward(req, resp);
-                System.out.println("login");
             } else {
-                System.out.println("else");
                 req.getRequestDispatcher("login.jsp").forward(req, resp);
             }
         } catch (SQLException ex) {

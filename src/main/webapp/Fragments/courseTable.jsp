@@ -5,6 +5,8 @@
             <th>Id</th>
             <th>Courses</th>
             <th>teachers</th>
+            <th>YHP</th>
+            <th>Description</th>
 
         </tr>
 
@@ -13,6 +15,9 @@
                         <td>${course.getId()}</td>
                         <td>${course.getCourseName()}</td>
                         <td>${course.getTeacherName()}</td>
+                        <td>${course.getYHP()}</td>
+                        <td>${course.getDescription()}</td>
+
                 </tr>
             </c:forEach>
 

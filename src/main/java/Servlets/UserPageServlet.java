@@ -17,7 +17,8 @@ public class UserPageServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         UsersBean userBean = ((UsersBean) getServletConfig().getServletContext().getAttribute("userBean"));
         if (userBean.getId()!=null){
-            UserCoursePackage.UserPageInformation(userBean, req);
+            String studentId = userBean.getId();
+            UserCoursePackage.UserPageInformation(userBean,req,studentId);
         }
         req.getRequestDispatcher("userpage.jsp").forward(req, resp);
     }
@@ -26,9 +27,12 @@ public class UserPageServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String showMyCourses = req.getParameter("showcourses");
         String showFellowStudents = req.getParameter("showstudents");
+        String showStudentCourses = req.getParameter("showStudentCourses");
         UsersBean userBean = ((UsersBean) getServletConfig().getServletContext().getAttribute("userBean"));
+        String studentId;
         if (showMyCourses!=null){
-            UserCoursePackage.UserPageInformation(userBean, req);
+            studentId = userBean.getId();
+            studentCourses(userBean,req,studentId);
             req.setAttribute("fellowStudentsBTClick", false);
             req.setAttribute("showMyCoursesBTClick", true);
             req.getRequestDispatcher("userpage.jsp").forward(req, resp);
@@ -38,6 +42,14 @@ public class UserPageServlet extends HttpServlet {
             req.setAttribute("fellowStudentsBTClick", true);
             req.setAttribute("showMyCoursesBTClick", false);
             req.getRequestDispatcher("userpage.jsp").forward(req, resp);
+        } else if (showStudentCourses!=null) {
+
         }
+
     }
+
+    public static void studentCourses (UsersBean userBean,HttpServletRequest req, String studentId){
+        UserCoursePackage.UserPageInformation(userBean,req,studentId);
+    }
+
 }

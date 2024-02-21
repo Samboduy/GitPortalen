@@ -20,11 +20,15 @@
 <c:if test="${requestScope['fellowStudentsBTClick']}">
     <%@ include file="Fragments/fellowStudentsTable.jsp" %>
 </c:if>
+<c:if test="${applicationScope.userBean.userType == 'student'}">
+    <%@ include file="Fragments/teacherForm.jsp" %>
+</c:if>
+<c:if test="${applicationScope.userBean.userType == 'teacher'}">
         <div class="form-cont">
             <form action="${pageContext.request.contextPath}/userpage" method="POST">
                <%--@declare id="selectcourse"--%><label for="selectCourse">Select Course Id:</label><br>
                 <select name="courseId" id="courseId"><br>
-                    <c:forEach items="${courses}" var="course">
+                    <c:forEach items="${applicationScope.userBean.userCourses}" var="course">
                     <option value="${course.getId()}" >${course.getId()}</option>
                     </c:forEach>
                 </select><br>
@@ -32,6 +36,7 @@
                    <input type="submit" name="showcourses" value="Show My courses">
             </form>
         </div>
+</c:if>
 </div>
 
 </body>

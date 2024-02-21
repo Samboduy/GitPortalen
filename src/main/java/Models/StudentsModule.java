@@ -17,10 +17,21 @@ public class StudentsModule {
             Database.PrintSQLException(e);
             return null;
         }
-
     }
-    public static ResultSet studentCourseData(UsersBean usersBean){
-        String sql = "SELECT s.fname, c.id,c.course_name, IFNULL(GROUP_CONCAT(t.fname SEPARATOR ', '), '') as teacher \n" +
+
+    public static ResultSet getStudent(){
+        String sql = "";
+        try {
+            PreparedStatement ps = Database.connect().prepareStatement(sql);
+            return ps.executeQuery();
+        }catch (SQLException e){
+            Database.PrintSQLException(e);
+            return null;
+        }
+    }
+
+    public static ResultSet studentCourseData(String studentId){
+        String sql = "SELECT s.fname,c.YHP,c.description,c.id,c.course_name, IFNULL(GROUP_CONCAT(t.fname SEPARATOR ', '), '') as teacher \n" +
                 "FROM students s  \n" +
                 "LEFT JOIN student_courses sc \n" +
                 "ON s.id = sc.student_id\n" +
@@ -34,7 +45,7 @@ public class StudentsModule {
                 "GROUP by c.id;";
         try {
             PreparedStatement ps = Database.connect().prepareStatement(sql);
-            ps.setString(1,usersBean.getId());
+            ps.setString(1,studentId);
             return ps.executeQuery();
         }catch (SQLException e){
             Database.PrintSQLException(e);
@@ -54,6 +65,18 @@ public class StudentsModule {
             return ps.executeQuery();
         }catch (SQLException e){
             Database.PrintSQLException(e);
+            return null;
+        }
+    }
+    public static ResultSet studentsID (){
+        String sql = "SELECT students.id \n" +
+                "FROM students\n" +
+                "Order BY students.id";
+        try {
+            PreparedStatement ps = Database.connect().prepareStatement(sql);
+            return  ps.executeQuery();
+        }catch (SQLException ex){
+            Database.PrintSQLException(ex);
             return null;
         }
     }

@@ -1,5 +1,7 @@
 package Models;
 
+import Models.Helpers.UserCourseConstructor;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -34,6 +36,34 @@ public class UsersBean implements Serializable {
     }
 
 
+
+    public ArrayList<String> getAllCoursesId() {
+        return allCoursesId;
+    }
+
+    public void setAllCoursesId(ArrayList<String> allCoursesId) {
+        this.allCoursesId = allCoursesId;
+    }
+
+    public ArrayList<String> getAllStudentsId() {
+        return allStudentsId;
+    }
+
+    public void setAllStudentsId(ArrayList<String> allStudentsId) {
+        this.allStudentsId = allStudentsId;
+    }
+
+    public ArrayList<UserCourseConstructor> getUserCourses() {
+        return userCourses;
+    }
+
+    public void setUserCourses(ArrayList<UserCourseConstructor> userCourses) {
+        this.userCourses = userCourses;
+    }
+
+    private ArrayList<UserCourseConstructor> userCourses;
+    private ArrayList<String> allCoursesId;
+    private ArrayList<String> allStudentsId;
     private String id;
     private String privilegeType;
     private String userType;
