@@ -14,7 +14,12 @@
     <div class="text">
         <h1>Your Courses</h1>
     </div>
+<c:if test="${requestScope['showMyCoursesBTClick']}">
     <%@ include file="Fragments/courseTable.jsp" %>
+</c:if>
+<c:if test="${requestScope['fellowStudentsBTClick']}">
+    <%@ include file="Fragments/fellowStudentsTable.jsp" %>
+</c:if>
         <div class="form-cont">
             <form action="${pageContext.request.contextPath}/userpage" method="POST">
                <%--@declare id="selectcourse"--%><label for="selectCourse">Select Course Id:</label><br>
@@ -24,6 +29,7 @@
                     </c:forEach>
                 </select><br>
                 <input type="submit" name="showstudents" value="show students">
+                   <input type="submit" name="showcourses" value="Show My courses">
             </form>
         </div>
 </div>

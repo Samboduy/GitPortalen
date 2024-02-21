@@ -72,7 +72,7 @@ public class LogInServlet extends HttpServlet {
                     }
                 }
                 getServletContext().setAttribute("userBean", userBean);
-                req.getRequestDispatcher("http://localhost:23310/userpage").forward(req, resp);
+                req.getRequestDispatcher("userpage.jsp").forward(req, resp);
                 System.out.println("login");
             } else {
                 System.out.println("else");

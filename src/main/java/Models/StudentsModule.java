@@ -2,6 +2,7 @@ package Models;
 
 import Models.Database;
 
+import javax.servlet.http.HttpServletRequest;
 import java.sql.*;
 
 public class StudentsModule {
@@ -34,6 +35,22 @@ public class StudentsModule {
         try {
             PreparedStatement ps = Database.connect().prepareStatement(sql);
             ps.setString(1,usersBean.getId());
+            return ps.executeQuery();
+        }catch (SQLException e){
+            Database.PrintSQLException(e);
+            return null;
+        }
+    }
+
+    public static ResultSet fellowStudentsData(String courseId){
+        String sql = "SELECT c.course_name,s.fname,s.id\n" +
+                "FROM student_courses sc \n" +
+                "LEFT JOIN students s ON s.id = sc.student_id\n" +
+                "LEFT JOIN courses c ON c.id = sc.course_id\n" +
+                "WHERE c.id = ?;";
+        try {
+            PreparedStatement ps = Database.connect().prepareStatement(sql);
+            ps.setString(1,courseId);
             return ps.executeQuery();
         }catch (SQLException e){
             Database.PrintSQLException(e);
