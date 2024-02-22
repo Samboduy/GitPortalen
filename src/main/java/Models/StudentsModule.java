@@ -81,6 +81,17 @@ public class StudentsModule {
         }
     }
 
+    public static ResultSet students (){
+        String sql = "SELECT id,username,fname,lname,email,phone FROM students;";
+        try {
+            PreparedStatement ps = Database.connect().prepareStatement(sql);
+            return  ps.executeQuery();
+        }catch (SQLException ex){
+            Database.PrintSQLException(ex);
+            return null;
+        }
+    }
+
     public static String insertStudent(String fname, String lname, String town, String email, int phone, String username, String password) {
         System.out.println(fname + lname);
         String insertSuccessfull;

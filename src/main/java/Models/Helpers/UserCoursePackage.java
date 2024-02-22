@@ -13,46 +13,64 @@ import java.util.ArrayList;
 public class UserCoursePackage {
 
     public static ArrayList<UserCourseConstructor> courses = new ArrayList<>();
+    public static ArrayList<TeacherStudentsConstructor> teacherStudents = new ArrayList<>();
     public static ArrayList<String> coursesID = new ArrayList<>();
     public static ArrayList<String> studentsID = new ArrayList<>();
     public static void UserPageInformation(UsersBean usersBean, HttpServletRequest req,String studentId){
         try {
             ResultSet rs = StudentsModule.studentCourseData(studentId);
-            courses.clear();
+            teacherStudents.clear();
             while (rs.next()){
                 String id = rs.getString("id");
                 String courseName= rs.getString("course_name");
                 String teacherName = rs.getString("teacher");
                 String YHP = rs.getString("YHP");
                 String description = rs.getString("description");
-                UserCourseConstructor course = new UserCourseConstructor(id,courseName,teacherName,YHP,description);
-                courses.add(course);
+                TeacherStudentsConstructor teacherCourse = new TeacherStudentsConstructor(id,courseName,teacherName,YHP,description);
+                teacherStudents.add(teacherCourse);
             }
-            usersBean.setUserCourses(courses);
+            usersBean.setTeachersStudentsCourses(teacherStudents);
             req.setAttribute("courses",courses);
         }catch (SQLException e){
             Database.PrintSQLException(e);
         }
     }
-    public static void userBeanIDsInfo (UsersBean userBean){
-        coursesID.clear();
-        studentsID.clear();
-        ResultSet students = StudentsModule.studentsID();
-        ResultSet courses = CoursesModule.coursesId();
+
+    public static void allCoursesPacker(UsersBean usersBean){
         try {
-            while (students.next()){
-                studentsID.add(students.getString("id"));
+            ResultSet rs = CoursesModule.courses();
+            courses.clear();
+            while (rs.next()){
+                String id = rs.getString("id");
+                String courseName= rs.getString("course_name");
+                String YHP = rs.getString("YHP");
+                String description = rs.getString("description");
+                UserCourseConstructor course = new UserCourseConstructor(id,courseName,YHP,description);
+                courses.add(course);
             }
-            while (courses.next()){
-                coursesID.add(courses.getString("id"));
-            }
-            System.out.println(studentsID + " STUD ID");
-            System.out.println(coursesID + " COURSE ID");
-            userBean.setAllCoursesId(coursesID);
-            userBean.setAllStudentsId(studentsID);
-        }catch (SQLException ex){
-
+            usersBean.setAllCourses(courses);
+        }catch (SQLException e){
+            Database.PrintSQLException(e);
         }
+    }
 
+    public static void teachersStudentsCoursePacker(UsersBean usersBean,String courseId){
+        try {
+            ResultSet rs = CoursesModule.findTeachersStudentsCourse(courseId);
+            teacherStudents.clear();
+            while (rs.next()){
+                String coursesId= rs.getString("courseId");
+                String courseName= rs.getString("course_name");
+                String studentId = rs.getString("studentId");
+                String studentFName = rs.getString("studentName");
+                String teacherId = rs.getString("teacherId");
+                String teacherFName = rs.getString("teacherName");
+                TeacherStudentsConstructor teachersStudentsCourse = new TeacherStudentsConstructor(coursesId,courseName,studentId,studentFName,teacherId,teacherFName);
+                teacherStudents.add(teachersStudentsCourse);
+            }
+            usersBean.setTeachersStudentsCourses(teacherStudents);
+        }catch (SQLException e){
+            Database.PrintSQLException(e);
+        }
     }
 }

@@ -1,12 +1,13 @@
 package Models;
 
+import Models.Helpers.TeacherStudentsConstructor;
 import Models.Helpers.UserCourseConstructor;
+import Models.Helpers.UserStudentsConstructor;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 
 public class UsersBean implements Serializable {
-
     public String getId() {
         return id;
     }
@@ -34,36 +35,41 @@ public class UsersBean implements Serializable {
     public void setConfirmed(boolean confirmed) {
         this.confirmed = confirmed;
     }
-
-
-
-    public ArrayList<String> getAllCoursesId() {
-        return allCoursesId;
+    public ArrayList<UserCourseConstructor> getAllCourses() {
+        return allCourses;
     }
-
-    public void setAllCoursesId(ArrayList<String> allCoursesId) {
-        this.allCoursesId = allCoursesId;
+    public void setAllCourses(ArrayList<UserCourseConstructor> allCourses) {
+        this.allCourses = allCourses;
     }
-
-    public ArrayList<String> getAllStudentsId() {
-        return allStudentsId;
+    public ArrayList<UserStudentsConstructor> getAllStudents() {
+        return allStudents;
     }
-
-    public void setAllStudentsId(ArrayList<String> allStudentsId) {
-        this.allStudentsId = allStudentsId;
+    public ArrayList<UserStudentsConstructor> getStudentCourses() {
+        return studentCourses;
     }
-
+    public void setStudentCourses(ArrayList<UserStudentsConstructor> studentCourses) {
+        this.studentCourses = studentCourses;
+    }
     public ArrayList<UserCourseConstructor> getUserCourses() {
         return userCourses;
     }
-
     public void setUserCourses(ArrayList<UserCourseConstructor> userCourses) {
         this.userCourses = userCourses;
     }
-
+    public void setAllStudents(ArrayList<UserStudentsConstructor> allStudents) {
+        this.allStudents = allStudents;
+    }
+    public void setTeachersStudentsCourses(ArrayList<TeacherStudentsConstructor> teachersStudentsCourses) {
+        this.teachersStudentsCourses = teachersStudentsCourses;
+    }
+    public ArrayList<TeacherStudentsConstructor> getTeachersStudentsCourses() {
+        return teachersStudentsCourses;
+    }
     private ArrayList<UserCourseConstructor> userCourses;
-    private ArrayList<String> allCoursesId;
-    private ArrayList<String> allStudentsId;
+    private ArrayList<TeacherStudentsConstructor> teachersStudentsCourses;
+    private ArrayList<UserStudentsConstructor> studentCourses;
+    private ArrayList<UserCourseConstructor> allCourses;
+    private ArrayList<UserStudentsConstructor> allStudents;
     private String id;
     private String privilegeType;
     private String userType;

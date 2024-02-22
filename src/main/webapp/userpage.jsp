@@ -20,10 +20,22 @@
 <c:if test="${requestScope['fellowStudentsBTClick']}">
     <%@ include file="Fragments/fellowStudentsTable.jsp" %>
 </c:if>
-<c:if test="${applicationScope.userBean.userType == 'student'}">
+    <c:if test="${requestScope['showAllStudents']}">
+        <%@ include file="Fragments/allStudentsTable.jsp" %>
+    </c:if>
+    <c:if test="${requestScope['showAllCourses']}">
+        <%@ include file="Fragments/allCoursesTable.jsp" %>
+    </c:if>
+    <c:if test="${requestScope['showStudentCourses']}">
+        <%@ include file="Fragments/fellowStudentsTable.jsp" %>
+    </c:if>
+    <c:if test="${requestScope['showStudentTeacherCourse']}">
+        <%@ include file="Fragments/teachersStudentsCourseTable.jsp" %>
+    </c:if>
+<c:if test="${applicationScope.userBean.userType == 'teacher'}">
     <%@ include file="Fragments/teacherForm.jsp" %>
 </c:if>
-<c:if test="${applicationScope.userBean.userType == 'teacher'}">
+<c:if test="${applicationScope.userBean.userType == 'student'}">
         <div class="form-cont">
             <form action="${pageContext.request.contextPath}/userpage" method="POST">
                <%--@declare id="selectcourse"--%><label for="selectCourse">Select Course Id:</label><br>

@@ -17,7 +17,6 @@
                         <td>${course.getTeacherName()}</td>
                         <td>${course.getYHP()}</td>
                         <td>${course.getDescription()}</td>
-
                 </tr>
             </c:forEach>
 

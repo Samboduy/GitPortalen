@@ -2,17 +2,16 @@
 <div class="table-cont">
     <table>
         <tr>
-            <th>Course</th>
-            <th>Students</th>
             <th>Student Id</th>
+            <th>Students</th>
+            <th>Course</th>
         </tr>
-        <c:forEach items="${students}" var="student">
+        <c:forEach items="${applicationScope.userBean.studentCourses}" var="student">
             <tr>
-                <td>${student.getCourseName()}</td>
-                <td>${student.getStudentName()}</td>
                 <td>${student.getStudentId()}</td>
+                <td>${student.getStudentName()}</td>
+                <td>${student.getCourseName()}</td>
             </tr>
         </c:forEach>
-
     </table>
 </div>

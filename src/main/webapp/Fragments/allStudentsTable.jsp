@@ -2,31 +2,23 @@
 <div class="table-cont">
     <table>
         <tr>
-            <th>Id</th>
-            <th>Courses</th>
-            <th>teachers</th>
-            <th>YHP</th>
-            <th>Description</th>
+            <th>Student Id</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Username</th>
+            <th>Email</th>
+            <th>Phone</th>
         </tr>
-
-        <c:forEach items="${courses}" var="course">
+        <c:forEach items="${applicationScope.userBean.allStudents}" var="student">
             <tr>
-                <td>${course.getId()}</td>
-                <td>${course.getCourseName()}</td>
-                <td>${course.getTeacherName()}</td>
-                <td>${course.getYHP()}</td>
-                <td>${course.getDescription()}</td>
-
+                <td>${student.getStudentId()}</td>
+                <td>${student.getStudentFirstName()}</td>
+                <td>${student.getStudentLastName()}</td>
+                <td>${student.getUsername()}</td>
+                <td>${student.getEmail()}</td>
+                <td>${student.getPhone()}</td>
             </tr>
         </c:forEach>
 
     </table>
 </div>
-<html>
-<head>
-    <title>Title</title>
-</head>
-<body>
-
-</body>
-</html>

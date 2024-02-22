@@ -1,8 +1,10 @@
 package Servlets;
 
+import Models.Helpers.UserStudentsPackage;
 import Models.PrivilegeType;
 import Models.StudentsModule;
 import Models.TeacherModule;
+import Models.UsersBean;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -47,8 +49,8 @@ public class RegisterServlet extends HttpServlet {
                 } catch (Exception e) {
                     throw new RuntimeException(e);
                 }
-
-
+                UsersBean userBean = ((UsersBean) getServletConfig().getServletContext().getAttribute("userBean"));
+                UserStudentsPackage.studentPacker(userBean);
             } else if (table.equals("Teacher")) {
                 //resp.sendRedirect(address);
 
