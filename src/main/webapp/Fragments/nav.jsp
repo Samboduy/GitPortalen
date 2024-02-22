@@ -3,5 +3,6 @@
             <nav>
                 <a href="http://localhost:23310/login">Login</a>
                 <a href="http://localhost:23310/userpage">user page</a>
+                <a href="http://localhost:23310/courses">user page</a>
             </nav>
         </div>

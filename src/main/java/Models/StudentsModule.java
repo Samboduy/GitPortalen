@@ -96,12 +96,16 @@ public class StudentsModule {
         System.out.println(fname + lname);
         String insertSuccessfull;
         try {
+            /*
             Class.forName("com.mysql.cj.jdbc.Driver");
 
             Connection con = DriverManager.getConnection("jdbc:mysql://localhost:13306/gritacademyportal", "root", "");
-
+*/
             String query = "Insert INTO students (fname, lname, town, email, phone, username, password) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
+
+
+            Connection con = Database.connect();
             try (PreparedStatement pstmt = con.prepareStatement(query)) {
                 pstmt.setString(1, fname);
                 pstmt.setString(2, lname);

@@ -1,6 +1,7 @@
 package Servlets;
 
 import Models.*;
+import Models.Helpers.DisplayCoursesPackage;
 import Models.Helpers.UserCoursePackage;
 import Models.Helpers.UserStudentsPackage;
 
@@ -78,6 +79,8 @@ public class LogInServlet extends HttpServlet {
                     }
                 }
                 getServletContext().setAttribute("userBean", userBean);
+                DisplayCoursesPackage.DisplayCourses(userBean);
+                UserCoursePackage.userBeanIDsInfo(userBean);
                 req.getRequestDispatcher("userpage.jsp").forward(req, resp);
             } else {
                 req.getRequestDispatcher("login.jsp").forward(req, resp);
