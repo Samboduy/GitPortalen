@@ -17,4 +17,15 @@ public class CoursesModule {
             return null;
         }
     }
+
+    public static ResultSet allCourses() {
+        String sql = "SELECT id ,course_name, YHP, description FROM courses";
+        try {
+            PreparedStatement ps = Database.connect().prepareStatement(sql);
+            return ps.executeQuery();
+        } catch (SQLException e) {
+            Database.PrintSQLException(e);
+            return null;
+        }
+    }
 }

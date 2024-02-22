@@ -30,4 +30,10 @@ public class UserCourseConstructor {
         this.YHP = YHP;
         this.description = description;
     }
+    UserCourseConstructor(String courseName, String YHP, String description){
+
+        this.courseName = courseName;
+        this.YHP = YHP;
+        this.description = description;
+    }
 }

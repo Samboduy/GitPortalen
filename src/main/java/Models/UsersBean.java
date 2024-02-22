@@ -64,6 +64,17 @@ public class UsersBean implements Serializable {
     private ArrayList<UserCourseConstructor> userCourses;
     private ArrayList<String> allCoursesId;
     private ArrayList<String> allStudentsId;
+
+
+    public ArrayList<UserCourseConstructor> getAllCourses() {
+        return allCourses;
+    }
+
+    public void setAllCourses(ArrayList<UserCourseConstructor> allCourses) {
+        this.allCourses = allCourses;
+    }
+
+    private ArrayList<UserCourseConstructor> allCourses;
     private String id;
     private String privilegeType;
     private String userType;
